@@ -53,6 +53,7 @@ jukebox/
         ├── data/manifest.ts      data contract types, validateManifest(), loadManifest()
         ├── state/store.ts        AppState, Intent union, reducer(), frameInterval()
         ├── audio/mapping.ts      PURE data→sound rules + text description
+        ├── audio/voices.ts       zone instrument table (identity timbre per location)
         ├── audio/engine.ts       Tone.js synthesis, scheduling, limiter, pause gate
         ├── input/keyboard.ts     global shortcuts → intents
         ├── input/serial.ts       Web Serial adapter: parse, validate, rate-limit → intents
@@ -89,6 +90,7 @@ NASA MUR v4.1 (Earthdata) ─►│  sRGB + Web Mercator JPEGs, point values, de
    `Intent`.
 2. **The manifest is read-only data.** All displayed numbers come from `manifest.json`. The frontend never computes
    a temperature. It only maps values to sound and text.
+5. **Identity is not data.** Zone instruments change tone colour only and are labelled as a design choice.
 3. **Mapping is pure.** `audio/mapping.ts` has no Tone.js, no DOM and no state. Same input, same cue. That's
    why it's fully unit-tested and why the UI can show "24.0 °C → 673 Hz" exactly.
 4. **Honest data modes.** `dataMode` is either `measured_sst` or `visual_feature`. In visual mode nothing may be
@@ -136,14 +138,27 @@ writer, the TS types, the validator and `test/fixtures.ts` together.
 All tunable constants (`PITCH`, `DELTA_MAX_C`, `UNCHANGED_C`, `FEATURE_*`) are at the top of the file. If you change
 one, update `mapping.test.ts`, the Explainer text in `Panels.tsx`, and `methodology.md`.
 
+### 5.3b Zone instruments: `src/audio/voices.ts`
+
+Each location id maps to a `VoiceDef { kind, name, why, trimDb }`. Unknown ids, or the “Zone instruments”
+toggle off (`AppState.zoneVoices`, persisted), fall back to `UNIFORM_VOICE` (triangle). Voices only change
+**tone colour**. `cueFor()` takes no voice input, so data → pitch/glide/pulses is the same for every zone. The
+instrument name appears in the panel, the explainer and the “In words” sentence.
+
+`trimDb` values were calibrated in the browser so all voices are within ~1 dB of the uniform tone. If you change an
+instrument's envelope or oscillator, re-measure: play a 440 Hz test cue through `window.__ej.engine.play(cue, 2,
+() => silent, window.__ej.voices.<id>)` in dev and compare the peak RMS of `engine.wave`. Keep each instrument's
+decay longer than the 120 ms glide, or the rising/falling cue becomes inaudible (this happened to the pluck).
+
 ### 5.4 Audio engine: `src/audio/engine.ts`
 
-Signal chain: `Synth (triangle) → voiceGain → gate → Volume → Limiter(−3 dB) → speakers` (+ FFT and Waveform taps).
+Signal chain: `zone instrument (buildInstrument) → voiceGain → gate → Volume → Limiter(−3 dB) → speakers` (+ FFT and Waveform taps).
+`buildInstrument(def)` creates the Tone.js synth for a voice kind (FMSynth, MonoSynth, or Synth + filtered noise for wind). It exposes one method, `note(freq, dur, time, from?)`.
 
 | Method | What it does |
 |---|---|
 | `ensure()` | Starts the AudioContext. **Must be called from a user gesture** (browser autoplay rule). |
-| `play(currentCue, interval, next)` | Plays `currentCue` now, then every `interval` s calls `next(time)` on the audio clock and renders the cue it returns. |
+| `play(currentCue, interval, next, voice)` | Builds `voice`, plays `currentCue` now, then every `interval` s calls `next(time)` on the audio clock and renders the cue it returns. |
 | `stop()` | Clears the schedule, closes the gate on the *immediate* clock, swaps in a fresh voice. |
 | `setOutput(volume, muted)` | 40 ms volume ramp. |
 | `levels()` / `peak()` | Meter bars / raw output peak (used to verify silence). |
@@ -159,7 +174,7 @@ Tone schedules ~100 ms ahead (`lookAhead`). Leave the default: setting it to 0.0
 
 - `act(intent)` is the single entry point for all inputs. For `PLAY`/`TOGGLE_PLAY` it calls `engine.ensure()`
   synchronously inside the gesture, then dispatches.
-- The audio `useEffect` watches `playing / frameIndex / locationId / speed`. When any changes during playback it
+- The audio `useEffect` watches `playing / frameIndex / locationId / speed / voice`. When any changes during playback it
   restarts the engine from the current state, so changes are heard immediately.
 - The engine's `next(time)` callback advances `played.current.frame` and schedules
   `dispatch(SET_FRAME)` with `Tone.getDraw()` at the same audio time. This keeps picture and sound in sync. Because
@@ -220,7 +235,8 @@ Pins are defined at the top. **Not yet compiled or tested on hardware.**
 | I want to… | Change |
 |---|---|
 | Tweak a sound rule | `audio/mapping.ts` constants → `mapping.test.ts` → Explainer in `Panels.tsx` → `methodology.md` |
-| Change synth timbre/envelope | `newVoice()` in `audio/engine.ts` |
+| Change a zone's instrument | `ZONE_VOICES` in `audio/voices.ts` (name, why, trim) and `buildInstrument()` in `engine.ts` (sound). Re-check loudness and glide (§5.3b) |
+| Give a new location a voice | Add its id to `ZONE_VOICES`; otherwise it uses the uniform tone |
 | Add a control intent | `Intent` + `reducer` in `store.ts` → (optional) `EXTERNAL_INTENTS` + `parseLine` → dispatch from UI/keyboard → tests |
 | Add a UI panel | New component in `components/`, fed from `App.tsx` derived values (`frame`, `point`, `cue`) |
 | Use different dates | `prepare_data.py --monthly` or `--dates`, then commit the new `public/data/sst/` |

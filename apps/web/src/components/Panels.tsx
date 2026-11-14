@@ -4,6 +4,7 @@ import {
   type SoundCue,
 } from '../audio/mapping';
 import type { Speed } from '../state/store';
+import { voiceFor, type VoiceDef } from '../audio/voices';
 
 const pct = (v: number) => `${(v * 100).toFixed(2)}%`;
 const shortDate = (iso: string) =>
@@ -168,6 +169,9 @@ export function SoundPanel(p: {
   locationId: string;
   point: PointObservation | undefined;
   cue: SoundCue;
+  voice: VoiceDef;
+  zoneVoices: boolean;
+  onZoneVoices: (on: boolean) => void;
   playing: boolean;
   muted: boolean;
   volume: number;
@@ -248,6 +252,19 @@ export function SoundPanel(p: {
         </div>
       </div>
 
+      <div role="group" aria-label="Zone instrument" className="param">
+        <div className="param-head">
+          <span className="mono param-name"><span className="muted">03</span> VOICE</span>
+          <span className="mono param-out">{p.voice.name}</span>
+        </div>
+        <div className="param-src"><span>{p.zoneVoices ? 'Zone identity (design choice, not data)' : 'Same tone for every location'}</span></div>
+        <p className="voice-why">{p.voice.why}</p>
+        <label className="toggle">
+          <input type="checkbox" checked={p.zoneVoices} onChange={(e) => p.onZoneVoices(e.target.checked)} />
+          <span>Zone instruments</span>
+        </label>
+      </div>
+
       <div className="ctl vol">
         <label htmlFor="vol">Volume</label>
         <input className="ej" id="vol" type="range" min={0} max={100} step={1} value={Math.round(p.volume * 100)} onChange={(e) => p.onVolume(+e.target.value / 100)} aria-valuetext={`${Math.round(p.volume * 100)} percent`} />
@@ -257,7 +274,7 @@ export function SoundPanel(p: {
   );
 }
 
-export function Explainer(p: { manifest: Manifest; cue: SoundCue; description: string; open: boolean; onToggle: () => void }) {
+export function Explainer(p: { manifest: Manifest; locations: Location[]; zoneVoices: boolean; cue: SoundCue; description: string; open: boolean; onToggle: () => void }) {
   const m = p.manifest;
   const measured = m.dataMode === 'measured_sst';
   return (
@@ -288,6 +305,15 @@ export function Explainer(p: { manifest: Manifest; cue: SoundCue; description: s
             <dt>Size of change</dt><dd aria-hidden="true" className="accent">→</dd>
             <dd>1–5 pulses per observation. Pulses describe the change between the shown observations, not a change per second.</dd>
             <dt>Missing or land data</dt><dd aria-hidden="true" className="accent">→</dd><dd>Silence and a “no valid data” notice. Never a zero.</dd>
+            <dt>Location (identity only)</dt><dd aria-hidden="true" className="accent">→</dd>
+            <dd>
+              {p.zoneVoices ? 'Each zone has its own instrument so you can tell places apart by ear. Tone colour only: pitch, glide and pulses follow the same rules everywhere.' : 'Zone instruments are off: every location uses the same tone.'}
+              {p.zoneVoices && (
+                <ul className="voice-list">
+                  {p.locations.map((l) => <li key={l.id}><span className="fg">{l.name}</span>: {voiceFor(l.id, true).name}</li>)}
+                </ul>
+              )}
+            </dd>
           </dl>
           <p className="fine">Now: {p.cue.frequencyHz === null ? p.cue.silentReason : `${Math.round(p.cue.frequencyHz)} Hz, ${directionSound(p.cue.direction)}, ${p.cue.pulses} pulse${p.cue.pulses > 1 ? 's' : ''}.`} {p.description}</p>
           <p className="fine">

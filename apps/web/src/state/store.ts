@@ -14,6 +14,8 @@ export interface AppState {
   /** 0–1 */
   volume: number;
   speed: Speed;
+  /** Zone instruments on (each location has its own timbre) or one uniform tone. */
+  zoneVoices: boolean;
   controllerConnected: boolean;
 }
 
@@ -30,6 +32,7 @@ export type Intent =
   | { type: 'MUTE' }
   | { type: 'UNMUTE' }
   | { type: 'SET_SPEED'; speed: Speed }
+  | { type: 'SET_ZONE_VOICES'; on: boolean }
   | { type: 'CONTROLLER'; connected: boolean }
   | { type: 'INIT'; frameCount: number; locationIds: string[] };
 
@@ -42,7 +45,7 @@ export const EXTERNAL_INTENTS = new Set([
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 const wrap = (i: number, n: number) => ((i % n) + n) % n;
 
-export function initialState(saved?: Partial<Pick<AppState, 'muted' | 'volume'>>): AppState {
+export function initialState(saved?: Partial<Pick<AppState, 'muted' | 'volume' | 'zoneVoices'>>): AppState {
   return {
     frameIndex: 0,
     frameCount: 0,
@@ -52,6 +55,7 @@ export function initialState(saved?: Partial<Pick<AppState, 'muted' | 'volume'>>
     muted: saved?.muted ?? false,
     volume: clamp(saved?.volume ?? 0.4, 0, 1),
     speed: 1,
+    zoneVoices: saved?.zoneVoices ?? true,
     controllerConnected: false,
   };
 }
@@ -93,6 +97,8 @@ export function reducer(s: AppState, a: Intent): AppState {
       return { ...s, muted: false };
     case 'SET_SPEED':
       return a.speed === 1 || a.speed === 2 ? { ...s, speed: a.speed } : s;
+    case 'SET_ZONE_VOICES':
+      return { ...s, zoneVoices: !!a.on };
     case 'CONTROLLER':
       return { ...s, controllerConnected: a.connected };
     default:

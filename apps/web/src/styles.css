@@ -238,3 +238,8 @@ input[type='range'].scrub::-moz-range-thumb { width: 14px; height: 64px; backgro
   input[type='range'].scrub::-webkit-slider-runnable-track, input[type='range'].scrub::-webkit-slider-thumb { height: 44px; }
   .frame-count { flex-wrap: wrap; }
 }
+.voice-why { margin: 0; font-size: 12px; line-height: 1.45; color: var(--muted); }
+.toggle { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--fg); cursor: pointer; width: fit-content; }
+.toggle input { accent-color: var(--accent); width: 16px; height: 16px; margin: 0; }
+.voice-list { margin: 6px 0 0; padding-left: 16px; color: var(--muted); }
+.voice-list li { margin: 2px 0; }

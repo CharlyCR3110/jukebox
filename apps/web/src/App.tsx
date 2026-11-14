@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'r
 import * as Tone from 'tone';
 import { AudioEngine } from './audio/engine';
 import { cueFor, describe, fmtDate, fmtLat, fmtLon } from './audio/mapping';
+import { ZONE_VOICES, UNIFORM_VOICE, voiceFor } from './audio/voices';
 import { MapView } from './components/MapView';
 import { Explainer, Header, Readout, SoundPanel, Timeline } from './components/Panels';
 import { loadManifest, type Manifest } from './data/manifest';
@@ -13,7 +14,7 @@ const PREFS_KEY = 'earth-jukebox:audio';
 
 function savedPrefs() {
   try {
-    return JSON.parse(localStorage.getItem(PREFS_KEY) ?? '{}') as { muted?: boolean; volume?: number };
+    return JSON.parse(localStorage.getItem(PREFS_KEY) ?? '{}') as { muted?: boolean; volume?: number; zoneVoices?: boolean };
   } catch {
     return {};
   }
@@ -40,22 +41,23 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(PREFS_KEY, JSON.stringify({ muted: state.muted, volume: state.volume }));
-  }, [state.muted, state.volume]);
+    localStorage.setItem(PREFS_KEY, JSON.stringify({ muted: state.muted, volume: state.volume, zoneVoices: state.zoneVoices }));
+  }, [state.muted, state.volume, state.zoneVoices]);
 
   // ---- derived observation -----------------------------------------------------
   const frame = manifest?.frames[state.frameIndex];
   const location = manifest?.locations.find((l) => l.id === state.locationId);
   const point = frame && location ? frame.points[location.id] : undefined;
   const cue = useMemo(() => cueFor(point, manifest?.dataMode ?? 'measured_sst'), [point, manifest]);
+  const voice = voiceFor(state.locationId, state.zoneVoices);
 
   // ---- audio -------------------------------------------------------------------
   const engine = useRef<AudioEngine | null>(null);
   engine.current ??= new AudioEngine();
-  if (import.meta.env.DEV) (window as unknown as { __ej?: unknown }).__ej = { engine: engine.current, Tone }; // dev-only test hook
+  if (import.meta.env.DEV) (window as unknown as { __ej?: unknown }).__ej = { engine: engine.current, Tone, voices: { ...ZONE_VOICES, uniform: UNIFORM_VOICE } }; // dev-only test hook
   const live = useRef({ state, manifest });
   live.current = { state, manifest };
-  const played = useRef<{ frame: number; loc: string; speed: number } | null>(null);
+  const played = useRef<{ frame: number; loc: string; speed: number; voice: string } | null>(null);
 
   /** Intents from every input. PLAY needs a user gesture to unlock audio; keyboard and clicks are gestures. */
   const act = useCallback((i: Intent) => {
@@ -77,21 +79,21 @@ export default function App() {
       return;
     }
     const p = played.current;
-    if (p && p.frame === state.frameIndex && p.loc === state.locationId && p.speed === state.speed) return;
+    if (p && p.frame === state.frameIndex && p.loc === state.locationId && p.speed === state.speed && p.voice === voice.kind) return;
     const start = async () => {
       if (!(await e.ensure())) { setAudioBlocked(true); return; }
       e.setOutput(state.volume, state.muted);
-      played.current = { frame: state.frameIndex, loc: state.locationId, speed: state.speed };
+      played.current = { frame: state.frameIndex, loc: state.locationId, speed: state.speed, voice: voice.kind };
       e.play(cue, frameInterval(state.speed), (time) => {
         const { state: s, manifest: m } = live.current;
         const next = (played.current!.frame + 1) % m!.frames.length;
         played.current = { ...played.current!, frame: next };
         Tone.getDraw().schedule(() => dispatch({ type: 'SET_FRAME', index: next }), time);
         return cueFor(m!.frames[next].points[s.locationId], m!.dataMode);
-      });
+      }, voice);
     };
     void start();
-  }, [state.playing, state.frameIndex, state.locationId, state.speed, manifest, cue, state.volume, state.muted]);
+  }, [state.playing, state.frameIndex, state.locationId, state.speed, manifest, cue, voice, state.volume, state.muted]);
 
   useEffect(() => {
     if (!state.playing || audioBlocked) return;
@@ -142,7 +144,7 @@ export default function App() {
   const measured = manifest.dataMode === 'measured_sst';
   const description = describe({
     mode: manifest.dataMode, date: frame.date, frameNumber: state.frameIndex + 1, frameCount: manifest.frames.length,
-    locationName: location.name, p: point, days: frame.daysSincePrevious, cue,
+    locationName: location.name, p: point, days: frame.daysSincePrevious, cue, voiceName: voice.name,
   });
   const series = manifest.frames.map((f) => {
     const p = f.points[location.id];
@@ -224,6 +226,9 @@ export default function App() {
             locationId={state.locationId}
             point={point}
             cue={cue}
+            voice={voice}
+            zoneVoices={state.zoneVoices}
+            onZoneVoices={(on) => act({ type: 'SET_ZONE_VOICES', on })}
             playing={state.playing}
             muted={state.muted}
             volume={state.volume}
@@ -234,7 +239,7 @@ export default function App() {
             onVolume={(value) => act({ type: 'SET_VOLUME', value })}
             onMute={() => act({ type: state.muted ? 'UNMUTE' : 'MUTE' })}
           />
-          <Explainer manifest={manifest} cue={cue} description={description} open={explainOpen} onToggle={() => setExplainOpen((o) => !o)} />
+          <Explainer manifest={manifest} locations={manifest.locations} zoneVoices={state.zoneVoices} cue={cue} description={description} open={explainOpen} onToggle={() => setExplainOpen((o) => !o)} />
         </div>
       </main>
       <footer id="about" className="ftr">

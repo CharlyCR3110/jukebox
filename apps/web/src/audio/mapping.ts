@@ -99,12 +99,14 @@ export function describe(opts: {
   p: PointObservation | undefined;
   days: number | null;
   cue: SoundCue;
+  /** Zone instrument name, e.g. "glass bell" (tone colour only). */
+  voiceName?: string;
 }): string {
   const { mode, p, cue } = opts;
   const head = `${fmtDate(opts.date)} (observation ${opts.frameNumber} of ${opts.frameCount}), ${opts.locationName}.`;
   if (cue.frequencyHz === null || !p) return `${head} ${cue.silentReason}`;
   const since = opts.days ? ` over ${opts.days} days` : '';
-  const sound = `You hear ${Math.round(cue.frequencyHz)} Hz with ${directionSound(cue.direction)} and ${cue.pulses} pulse${cue.pulses > 1 ? 's' : ''}.`;
+  const sound = `You hear ${opts.voiceName ? `the ${opts.voiceName} at ` : ''}${Math.round(cue.frequencyHz)} Hz with ${directionSound(cue.direction)} and ${cue.pulses} pulse${cue.pulses > 1 ? 's' : ''}.`;
   if (mode === 'measured_sst' && p.sstC !== null) {
     const change = p.deltaC === null
       ? 'No change is available because this is the first selected observation or the previous one is invalid.'

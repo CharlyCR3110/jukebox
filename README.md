@@ -6,7 +6,7 @@ NASA Space Apps 2026 · [The Earth Information Jukebox](https://www.spaceappscha
 
 Select an ocean location, press Play, and hear its sea-surface temperature change while NASA's visualization
 steps through time. Warmer water gives a higher tone. A glide shows the direction of change, and the number of
-pulses shows its size. The map, readout, text and sound all render from one state, and every number links to
+pulses shows its size. Each zone also has its own instrument (mallet, pluck, brass, bell, wind) so places are recognisable by ear. The map, readout, text and sound all render from one state, and every number links to
 its NASA source.
 
 ```bash

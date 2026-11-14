@@ -61,14 +61,19 @@ the word “index” instead of °C, and the validator rejects any `sstC` in thi
 | \|ΔC\| | Pulses per observation | `1 + round(min(|ΔC|, 2) / 2 × 4)`: 0 °C → 1, 0.5 → 2, 1.0 → 3, 1.5 → 4, ≥ 2 → 5 (capped, flagged) |
 | Missing / invalid | Silence | Plus “no valid data” text. |
 | (visual mode) index −1…1 | Pitch | `Hz = 220 + (index + 1) / 2 × 660`; pulses use \|Δindex\| up to 0.2 |
+| Location (identity only) | Instrument / timbre | Warm pool → soft mallet · Niño 3.4 → wooden pluck · Gulf of Mexico → brass · North Atlantic → glass bell · Southern Ocean → breathy wind. **A design choice, not data.** It changes tone colour only; pitch, glide and pulses follow the same rules for every voice. Switch it off (“Zone instruments”) for one uniform tone. |
 
 Worked example: SST 24.0 °C → 220 + 24/35 × 660 = **672.6 Hz** (shown as 673 Hz). ΔC = +0.40 °C → upward glide,
 `1 + round(0.4/2 × 4) = 2` pulses.
 
+Zone instruments were checked in the browser on the real audio output. The fundamental of every voice matched the
+mapped frequency (330/660/440 Hz test notes, within the estimator's ±1-sample resolution). Rising and falling glides
+are audible on every voice. Levels are matched to within ~1 dB of the uniform tone via `trimDb` in `voices.ts`.
+
 Timing: one observation per 1.0 s at 1×, 0.5 s at 2×. Pulses describe change *between the shown observations*,
 not change per second.
 
-Audio chain: Tone.js triangle synth (30 ms attack, 80 ms release) → per-voice gain → gate → volume → limiter
+Audio chain: zone instrument (or the uniform triangle synth) → per-voice gain → gate → volume → limiter
 (−3 dB) → output. Audio starts only after a user gesture (Play, Space or Connect controller). Pause closes the
 gate on the immediate audio clock and discards queued notes. Measured: silent within about 80 ms of pressing Pause,
 including the analyser's 23 ms buffer. Mute and volume are remembered in `localStorage`.

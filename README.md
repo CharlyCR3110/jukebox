@@ -1,5 +1,7 @@
 # Earth Jukebox: Listening Lab
 
+> New to the code? Start with [docs/HANDOFF.md](docs/HANDOFF.md).
+
 NASA Space Apps 2026 · [The Earth Information Jukebox](https://www.spaceappschallenge.org/2026/challenges/the-earth-information-jukebox/)
 
 Select an ocean location, press Play, and hear its sea-surface temperature change while NASA's visualization

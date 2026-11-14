@@ -1,0 +1,69 @@
+{
+  "dataset": "ocean",
+  "layer": "GHRSST_L4_MUR_Sea_Surface_Temperature",
+  "year": 2023,
+  "colormap": "colormap.xml",
+  "fetchedAt": "2026-11-14T14:45:17.953Z",
+  "frames": [
+    {
+      "date": "2023-01-15",
+      "analysis": "analysis-01.png",
+      "display": "display-01.png"
+    },
+    {
+      "date": "2023-02-15",
+      "analysis": "analysis-02.png",
+      "display": "display-02.png"
+    },
+    {
+      "date": "2023-03-15",
+      "analysis": "analysis-03.png",
+      "display": "display-03.png"
+    },
+    {
+      "date": "2023-04-15",
+      "analysis": "analysis-04.png",
+      "display": "display-04.png"
+    },
+    {
+      "date": "2023-05-15",
+      "analysis": "analysis-05.png",
+      "display": "display-05.png"
+    },
+    {
+      "date": "2023-06-15",
+      "analysis": "analysis-06.png",
+      "display": "display-06.png"
+    },
+    {
+      "date": "2023-07-15",
+      "analysis": "analysis-07.png",
+      "display": "display-07.png"
+    },
+    {
+      "date": "2023-08-15",
+      "analysis": "analysis-08.png",
+      "display": "display-08.png"
+    },
+    {
+      "date": "2023-09-15",
+      "analysis": "analysis-09.png",
+      "display": "display-09.png"
+    },
+    {
+      "date": "2023-10-15",
+      "analysis": "analysis-10.png",
+      "display": "display-10.png"
+    },
+    {
+      "date": "2023-11-15",
+      "analysis": "analysis-11.png",
+      "display": "display-11.png"
+    },
+    {
+      "date": "2023-12-15",
+      "analysis": "analysis-12.png",
+      "display": "display-12.png"
+    }
+  ]
+}

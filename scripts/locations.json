@@ -1,0 +1,7 @@
+[
+  { "id": "wpwp", "name": "Western Pacific warm pool", "lat": 5.0, "lon": 150.0 },
+  { "id": "nino34", "name": "Central equatorial Pacific (Niño 3.4)", "lat": 0.0, "lon": -145.0 },
+  { "id": "gulf", "name": "Gulf of Mexico", "lat": 25.0, "lon": -90.0 },
+  { "id": "natl", "name": "North Atlantic", "lat": 45.0, "lon": -35.0 },
+  { "id": "so", "name": "Southern Ocean", "lat": -55.0, "lon": 0.0 }
+]

@@ -1,0 +1,862 @@
+{
+  "schemaVersion": 1,
+  "title": "Ocean Surface Temperature",
+  "datasetId": "MUR-JPL-L4-GLOB-v4.1",
+  "dataMode": "visual_feature",
+  "units": "red_blue_index",
+  "samplingMethod": "Mean of (R − B) / 255 over colored (non-grey) pixels of the sRGB SVS frame within ±0.5° of the location. This describes the visualization's colors only: it is not a temperature.",
+  "generatedAt": "2026-11-14T16:35:37+00:00",
+  "generator": "scripts/prepare_data.py",
+  "visualization": {
+    "svsId": 5101,
+    "title": "Sea Surface Temperature (SST) - Near Real Time",
+    "url": "https://svs.gsfc.nasa.gov/5101/",
+    "eicKeyword": true,
+    "frameSet": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/frames/4096x2048_2x1_30p/sst_mur_no-dates/",
+    "projection": "Source frames are equirectangular 4096×2048; reprojected row-exactly to Web Mercator (±85.0511°) for display.",
+    "credit": "NASA's Scientific Visualization Studio"
+  },
+  "numericSource": null,
+  "colorScale": {
+    "minC": -5,
+    "maxC": 35,
+    "stops": [
+      "#00233f",
+      "#003159",
+      "#004479",
+      "#0060a4",
+      "#0a79c4",
+      "#008bd0",
+      "#219cdb",
+      "#5fb2e5",
+      "#8cc6ec",
+      "#add5f4",
+      "#e3e2e4",
+      "#fddcaf",
+      "#f2c490",
+      "#e1ac76",
+      "#d09162",
+      "#c27450",
+      "#af4b39",
+      "#97362f",
+      "#7c2b2e",
+      "#622226",
+      "#49191b"
+    ],
+    "source": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/sst_mur_colorbar_print.jpg"
+  },
+  "locations": [
+    {
+      "id": "wpwp",
+      "name": "Western Pacific warm pool",
+      "lat": 5.0,
+      "lon": 150.0
+    },
+    {
+      "id": "nino34",
+      "name": "Central equatorial Pacific (Niño 3.4)",
+      "lat": 0.0,
+      "lon": -145.0
+    },
+    {
+      "id": "gulf",
+      "name": "Gulf of Mexico",
+      "lat": 25.0,
+      "lon": -90.0
+    },
+    {
+      "id": "natl",
+      "name": "North Atlantic",
+      "lat": 45.0,
+      "lon": -35.0
+    },
+    {
+      "id": "so",
+      "name": "Southern Ocean",
+      "lat": -55.0,
+      "lon": 0.0
+    }
+  ],
+  "frames": [
+    {
+      "frameId": "sst-20251115",
+      "date": "2025-11-15",
+      "imageUrl": "data/sst/frames/sst_20251115_merc.jpg",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/frames/4096x2048_2x1_30p/sst_mur_no-dates/sst_mur_20251115_no-dates.exr",
+      "datasetId": "MUR-JPL-L4-GLOB-v4.1",
+      "daysSincePrevious": null,
+      "points": {
+        "wpwp": {
+          "lat": 5.0,
+          "lon": 150.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3417,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": null
+        },
+        "nino34": {
+          "lat": 0.0,
+          "lon": -145.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4387,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": null
+        },
+        "gulf": {
+          "lat": 25.0,
+          "lon": -90.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4277,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": null
+        },
+        "natl": {
+          "lat": 45.0,
+          "lon": -35.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.0306,
+          "isValid": true,
+          "coverage": 0.854,
+          "featureDelta": null
+        },
+        "so": {
+          "lat": -55.0,
+          "lon": 0.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.4692,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": null
+        }
+      }
+    },
+    {
+      "frameId": "sst-20251215",
+      "date": "2025-12-15",
+      "imageUrl": "data/sst/frames/sst_20251215_merc.jpg",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/frames/4096x2048_2x1_30p/sst_mur_no-dates/sst_mur_20251215_no-dates.exr",
+      "datasetId": "MUR-JPL-L4-GLOB-v4.1",
+      "daysSincePrevious": 30,
+      "points": {
+        "wpwp": {
+          "lat": 5.0,
+          "lon": 150.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3508,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0091
+        },
+        "nino34": {
+          "lat": 0.0,
+          "lon": -145.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4369,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0018
+        },
+        "gulf": {
+          "lat": 25.0,
+          "lon": -90.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4432,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0155
+        },
+        "natl": {
+          "lat": 45.0,
+          "lon": -35.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.2398,
+          "isValid": true,
+          "coverage": 0.938,
+          "featureDelta": -0.2092
+        },
+        "so": {
+          "lat": -55.0,
+          "lon": 0.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.5082,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.039
+        }
+      }
+    },
+    {
+      "frameId": "sst-20260115",
+      "date": "2026-01-15",
+      "imageUrl": "data/sst/frames/sst_20260115_merc.jpg",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/frames/4096x2048_2x1_30p/sst_mur_no-dates/sst_mur_20260115_no-dates.exr",
+      "datasetId": "MUR-JPL-L4-GLOB-v4.1",
+      "daysSincePrevious": 31,
+      "points": {
+        "wpwp": {
+          "lat": 5.0,
+          "lon": 150.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3811,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0303
+        },
+        "nino34": {
+          "lat": 0.0,
+          "lon": -145.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4377,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0008
+        },
+        "gulf": {
+          "lat": 25.0,
+          "lon": -90.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4378,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0054
+        },
+        "natl": {
+          "lat": 45.0,
+          "lon": -35.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.2833,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0435
+        },
+        "so": {
+          "lat": -55.0,
+          "lon": 0.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.6141,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.1059
+        }
+      }
+    },
+    {
+      "frameId": "sst-20260215",
+      "date": "2026-02-15",
+      "imageUrl": "data/sst/frames/sst_20260215_merc.jpg",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/frames/4096x2048_2x1_30p/sst_mur_no-dates/sst_mur_20260215_no-dates.exr",
+      "datasetId": "MUR-JPL-L4-GLOB-v4.1",
+      "daysSincePrevious": 31,
+      "points": {
+        "wpwp": {
+          "lat": 5.0,
+          "lon": 150.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3533,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0278
+        },
+        "nino34": {
+          "lat": 0.0,
+          "lon": -145.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4353,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0024
+        },
+        "gulf": {
+          "lat": 25.0,
+          "lon": -90.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4388,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.001
+        },
+        "natl": {
+          "lat": 45.0,
+          "lon": -35.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.3384,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0551
+        },
+        "so": {
+          "lat": -55.0,
+          "lon": 0.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.6394,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0253
+        }
+      }
+    },
+    {
+      "frameId": "sst-20260315",
+      "date": "2026-03-15",
+      "imageUrl": "data/sst/frames/sst_20260315_merc.jpg",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/frames/4096x2048_2x1_30p/sst_mur_no-dates/sst_mur_20260315_no-dates.exr",
+      "datasetId": "MUR-JPL-L4-GLOB-v4.1",
+      "daysSincePrevious": 28,
+      "points": {
+        "wpwp": {
+          "lat": 5.0,
+          "lon": 150.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3683,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.015
+        },
+        "nino34": {
+          "lat": 0.0,
+          "lon": -145.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4371,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0018
+        },
+        "gulf": {
+          "lat": 25.0,
+          "lon": -90.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4387,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0001
+        },
+        "natl": {
+          "lat": 45.0,
+          "lon": -35.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.1795,
+          "isValid": true,
+          "coverage": 0.882,
+          "featureDelta": 0.1589
+        },
+        "so": {
+          "lat": -55.0,
+          "lon": 0.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.5796,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0598
+        }
+      }
+    },
+    {
+      "frameId": "sst-20260415",
+      "date": "2026-04-15",
+      "imageUrl": "data/sst/frames/sst_20260415_merc.jpg",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/frames/4096x2048_2x1_30p/sst_mur_no-dates/sst_mur_20260415_no-dates.exr",
+      "datasetId": "MUR-JPL-L4-GLOB-v4.1",
+      "daysSincePrevious": 31,
+      "points": {
+        "wpwp": {
+          "lat": 5.0,
+          "lon": 150.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.374,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0057
+        },
+        "nino34": {
+          "lat": 0.0,
+          "lon": -145.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4318,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0053
+        },
+        "gulf": {
+          "lat": 25.0,
+          "lon": -90.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.439,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0003
+        },
+        "natl": {
+          "lat": 45.0,
+          "lon": -35.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.3072,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.1277
+        },
+        "so": {
+          "lat": -55.0,
+          "lon": 0.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.549,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0306
+        }
+      }
+    },
+    {
+      "frameId": "sst-20260515",
+      "date": "2026-05-15",
+      "imageUrl": "data/sst/frames/sst_20260515_merc.jpg",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/frames/4096x2048_2x1_30p/sst_mur_no-dates/sst_mur_20260515_no-dates.exr",
+      "datasetId": "MUR-JPL-L4-GLOB-v4.1",
+      "daysSincePrevious": 30,
+      "points": {
+        "wpwp": {
+          "lat": 5.0,
+          "lon": 150.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3686,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0054
+        },
+        "nino34": {
+          "lat": 0.0,
+          "lon": -145.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4087,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0231
+        },
+        "gulf": {
+          "lat": 25.0,
+          "lon": -90.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4425,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0035
+        },
+        "natl": {
+          "lat": 45.0,
+          "lon": -35.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.0588,
+          "isValid": true,
+          "coverage": 0.799,
+          "featureDelta": 0.2484
+        },
+        "so": {
+          "lat": -55.0,
+          "lon": 0.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.5268,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0222
+        }
+      }
+    },
+    {
+      "frameId": "sst-20260615",
+      "date": "2026-06-15",
+      "imageUrl": "data/sst/frames/sst_20260615_merc.jpg",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/frames/4096x2048_2x1_30p/sst_mur_no-dates/sst_mur_20260615_no-dates.exr",
+      "datasetId": "MUR-JPL-L4-GLOB-v4.1",
+      "daysSincePrevious": 31,
+      "points": {
+        "wpwp": {
+          "lat": 5.0,
+          "lon": 150.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3415,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0271
+        },
+        "nino34": {
+          "lat": 0.0,
+          "lon": -145.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3761,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0326
+        },
+        "gulf": {
+          "lat": 25.0,
+          "lon": -90.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3859,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0566
+        },
+        "natl": {
+          "lat": 45.0,
+          "lon": -35.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.2046,
+          "isValid": true,
+          "coverage": 0.938,
+          "featureDelta": 0.2634
+        },
+        "so": {
+          "lat": -55.0,
+          "lon": 0.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.5113,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0155
+        }
+      }
+    },
+    {
+      "frameId": "sst-20260715",
+      "date": "2026-07-15",
+      "imageUrl": "data/sst/frames/sst_20260715_merc.jpg",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/frames/4096x2048_2x1_30p/sst_mur_no-dates/sst_mur_20260715_no-dates.exr",
+      "datasetId": "MUR-JPL-L4-GLOB-v4.1",
+      "daysSincePrevious": 30,
+      "points": {
+        "wpwp": {
+          "lat": 5.0,
+          "lon": 150.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3432,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0017
+        },
+        "nino34": {
+          "lat": 0.0,
+          "lon": -145.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3666,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0095
+        },
+        "gulf": {
+          "lat": 25.0,
+          "lon": -90.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3309,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.055
+        },
+        "natl": {
+          "lat": 45.0,
+          "lon": -35.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3662,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.1616
+        },
+        "so": {
+          "lat": -55.0,
+          "lon": 0.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.5407,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0294
+        }
+      }
+    },
+    {
+      "frameId": "sst-20260815",
+      "date": "2026-08-15",
+      "imageUrl": "data/sst/frames/sst_20260815_merc.jpg",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/frames/4096x2048_2x1_30p/sst_mur_no-dates/sst_mur_20260815_no-dates.exr",
+      "datasetId": "MUR-JPL-L4-GLOB-v4.1",
+      "daysSincePrevious": 31,
+      "points": {
+        "wpwp": {
+          "lat": 5.0,
+          "lon": 150.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3568,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0136
+        },
+        "nino34": {
+          "lat": 0.0,
+          "lon": -145.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3376,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.029
+        },
+        "gulf": {
+          "lat": 25.0,
+          "lon": -90.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3592,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0283
+        },
+        "natl": {
+          "lat": 45.0,
+          "lon": -35.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4269,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0607
+        },
+        "so": {
+          "lat": -55.0,
+          "lon": 0.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.4578,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0829
+        }
+      }
+    },
+    {
+      "frameId": "sst-20260915",
+      "date": "2026-09-15",
+      "imageUrl": "data/sst/frames/sst_20260915_merc.jpg",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/frames/4096x2048_2x1_30p/sst_mur_no-dates/sst_mur_20260915_no-dates.exr",
+      "datasetId": "MUR-JPL-L4-GLOB-v4.1",
+      "daysSincePrevious": 31,
+      "points": {
+        "wpwp": {
+          "lat": 5.0,
+          "lon": 150.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3639,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0071
+        },
+        "nino34": {
+          "lat": 0.0,
+          "lon": -145.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3189,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0187
+        },
+        "gulf": {
+          "lat": 25.0,
+          "lon": -90.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.2733,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0859
+        },
+        "natl": {
+          "lat": 45.0,
+          "lon": -35.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4076,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0193
+        },
+        "so": {
+          "lat": -55.0,
+          "lon": 0.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.4157,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0421
+        }
+      }
+    },
+    {
+      "frameId": "sst-20261015",
+      "date": "2026-10-15",
+      "imageUrl": "data/sst/frames/sst_20261015_merc.jpg",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005101/frames/4096x2048_2x1_30p/sst_mur_no-dates/sst_mur_20261015_no-dates.exr",
+      "datasetId": "MUR-JPL-L4-GLOB-v4.1",
+      "daysSincePrevious": 30,
+      "points": {
+        "wpwp": {
+          "lat": 5.0,
+          "lon": 150.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.342,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0219
+        },
+        "nino34": {
+          "lat": 0.0,
+          "lon": -145.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3271,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.0082
+        },
+        "gulf": {
+          "lat": 25.0,
+          "lon": -90.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.4035,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.1302
+        },
+        "natl": {
+          "lat": 45.0,
+          "lon": -35.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": 0.3669,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": -0.0407
+        },
+        "so": {
+          "lat": -55.0,
+          "lon": 0.0,
+          "sstC": null,
+          "deltaC": null,
+          "spatialStdC": null,
+          "feature": -0.3937,
+          "isValid": true,
+          "coverage": 1.0,
+          "featureDelta": 0.022
+        }
+      }
+    }
+  ]
+}

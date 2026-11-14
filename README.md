@@ -1,63 +1,70 @@
-# Earth Jukebox — Listening Lab
+# Earth Jukebox: Listening Lab
 
 NASA Space Apps 2026 · [The Earth Information Jukebox](https://www.spaceappschallenge.org/2026/challenges/the-earth-information-jukebox/)
 
-Turns NASA's ocean-temperature imagery into sound. Pick a year and a listening point, then press play. Each month is
-one frame: its pitch, rhythm and texture come from the colours in NASA's own map images.
+Select an ocean location, press Play, and hear its sea-surface temperature change while NASA's visualization
+steps through time. Warmer water gives a higher tone. A glide shows the direction of change, and the number of
+pulses shows its size. The map, readout, text and sound all render from one state, and every number links to
+its NASA source.
 
 ```bash
-npm install
-npm run dev            # http://127.0.0.1:5173 (bound to loopback only)
-npm run build          # type-check + production bundle in dist/
-npm run fetch-frames -- 2023 2015   # cache years for offline demos
+npm run setup     # install apps/web
+npm run dev       # http://127.0.0.1:5173 (loopback only)
+npm test          # unit tests (mapping formulas, state, manifest contract, serial protocol)
+npm run build     # type-check + tests + bundle → apps/web/dist (static, no backend)
 ```
 
-## How it works
+## Data
 
-```
-NASA GIBS image (PNG, EPSG:4326, 0.5°/px)
-  └─ canvas getImageData ─ RGB → °C via the GIBS colormap XML (215 bins, 0.15 °C)
-       └─ grid stats: cos(lat)-weighted ocean mean, spatial σ, 5° latitude bands
-            └─ mapping (src/sonify/mapping.ts)
-                 anomaly vs 12-month mean → pitch (C major pentatonic, ±span octaves)
-                 change since last frame  → LFO pulse rate (0.5–8 Hz)
-                 spatial spread           → band-passed noise "grain"
-                 └─ Tone.js graph (src/sonify/engine.ts) → live audio or offline WAV
-```
+| Mode | What you hear | How to build |
+|---|---|---|
+| `measured_sst` | Measured MUR v4.1 SST (°C) at each location and date | `python scripts/prepare_data.py --mode measured` (needs a free [Earthdata Login](https://urs.earthdata.nasa.gov/users/new) via `EARTHDATA_USERNAME`/`EARTHDATA_PASSWORD` or `~/.netrc`) |
+| `visual_feature` | Red–blue index of the NASA frame pixels. Labeled everywhere as **not a temperature** | `python scripts/prepare_data.py --mode visual` (no credentials) |
 
-- **Map**: MapLibre GL JS 6 with NASA GIBS WMTS tiles (`GHRSST_L4_MUR_Sea_Surface_Temperature`, one layer per month
-  so frame changes are instant), GIBS coastlines, a 30° graticule, and a flat/globe toggle. Click (or use the arrow keys)
-  to drop a probe; Esc returns to the global mean.
-- **Audio**: Tone.js. A triangle drone, LFO-gated for rhythm, plus noise for texture and an FM bell struck on each new month.
-  Frame stepping runs on `Tone.Transport`, so sound and visuals stay in sync. **Download 12-frame WAV** renders the
-  same graph with `Tone.Offline`.
-- **Accessibility**: every control is keyboard reachable. The "In words" line is an `aria-live` text description of
-  what you hear, and a status line reports audio state.
+**Currently shipped: `visual_feature`.** Earthdata credentials were not available when the data was built. Run the
+measured command once to switch; the app reads the mode from the manifest. Python setup:
 
-## Data sources
-
-| What | Where |
-|---|---|
-| Sea-surface temperature | JPL MUR SST, GHRSST L4 v4.1 (PO.DAAC), daily, 0.01°. Frames use the 15th of each month |
-| Imagery + colormap | NASA GIBS: `gibs.earthdata.nasa.gov` WMTS/WMS, `colormaps/v1.3/GHRSST_Sea_Surface_Temperature.xml` |
-
-Values are decoded from rendered imagery, so they are quantised to the 0.15 °C colormap bins, and land/sea ice shows up
-as "no data". That is accurate enough for sonification but not for science.
-
-### Offline / demo mode
-
-`npm run fetch-frames -- <year…>` saves `public/data/ocean/<year>/` (analysis PNGs, 2048² display PNGs, colormap,
-`manifest.json`). When a manifest exists the app analyses the local files. If GIBS tiles fail to load, the map switches
-to the cached display images. 2023 is pre-cached (about 13 MB).
-
-## Layout
-
-```
-src/data/       datasets.ts (registry), gibs.ts (URLs), colormap.ts, frames.ts (decode + stats), useFrames.ts
-src/sonify/     mapping.ts (data→sound rules, text description), engine.ts (Tone.js live + offline WAV)
-src/components/ MapView (MapLibre), Timeline, SonificationPanel, Chrome (header, dataset bar, footer)
-scripts/        fetch-nasa-frames.mjs
+```bash
+uv venv scripts/.venv && source scripts/.venv/bin/activate
+uv pip install -r scripts/requirements.txt
+python scripts/prepare_data.py --selftest 2019-11-15   # checks extraction on the anonymous AWS MUR copy
 ```
 
-To add a dataset (vegetation, sea ice…), add a GIBS layer and its colormap to `src/data/datasets.ts` and set `ready: true`.
-The mapping currently assumes temperature-like units.
+Frames come from NASA SVS 5101, which is tagged “Earth Information Center” in the SVS API. Still confirm it with
+EIC before submission. The default dates are 12 monthly observations, 2025-11-15 … 2026-10-15. Details, formulas
+and limitations are in [docs/methodology.md](docs/methodology.md).
+
+## Architecture
+
+```
+scripts/prepare_data.py ─► apps/web/public/data/sst/{manifest.json, frames/*.jpg}
+                                  │  (contract: apps/web/src/data/manifest.ts, validated on load)
+mouse ─┐                          ▼
+keyboard ─┼─► intents ─► reducer (src/state/store.ts) ─► one AppState ─┬─► MapLibre view
+serial ─┘    PLAY, NEXT_FRAME, SELECT_LOCATION, …                       ├─► readout + “In words” text
+                                                                        └─► audio (src/audio): mapping.ts → engine.ts (Tone.js)
+```
+
+| Path | Owner (provisional) | Contents |
+|---|---|---|
+| `apps/web/src/state/` | Integrator | Intents, reducer, timing |
+| `apps/web/src/audio/` | Audio lead | `mapping.ts` (pure, tested), `engine.ts` (Tone.js, limiter, gate) |
+| `apps/web/src/input/` | Frontend / hardware | keyboard, Web Serial adapter (115200 baud, NDJSON) |
+| `apps/web/src/components/` | Frontend | Map, readout, timeline, sonification panel, explainer |
+| `scripts/` | Data lead | `prepare_data.py`, `locations.json` |
+| `firmware/esp32/` | Hardware lead | Reference sketch (not yet compiled or tested on hardware) |
+| `docs/` | Experience lead | `methodology.md`, `demo.md` (runbook, 90 s script, acceptance checklist) |
+
+**Controller protocol:** one JSON object per line, e.g. `{"type":"NEXT_FRAME"}`. Accepted types: `PLAY`, `PAUSE`,
+`TOGGLE_PLAY`, `NEXT_FRAME`, `PREV_FRAME`, `SET_FRAME{index}`, `SELECT_LOCATION{id}`, `ADJUST_LOCATION{direction:±1}`,
+`SET_VOLUME{value 0–1}`, `MUTE`, `UNMUTE`. Anything else is dropped; at most 20 events/s are accepted. Needs desktop
+Chrome or Edge on localhost or HTTPS. Every action is also available without the controller.
+
+**Keyboard:** Space play/pause · ←/→ date · ↑/↓ location · M mute · Tab reaches every control.
+
+## Not done yet (spec P1 / open items)
+
+- Measured data build (needs Earthdata credentials) and official EIC confirmation.
+- Listening Challenge (A/B comparison) and spatial-variability timbre.
+- Firmware has not been compiled or run on an ESP32. The browser adapter is unit-tested against the protocol only.
+- No user testing of the sound mapping or accessibility yet.

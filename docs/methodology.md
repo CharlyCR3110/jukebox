@@ -11,10 +11,12 @@ Everything here is produced by `scripts/prepare_data.py` and implemented in
 | Measured values | GHRSST L4 **MUR v4.1** (`MUR-JPL-L4-GLOB-v4.1`), NASA JPL / PO.DAAC, daily 0.01°, variable `analysed_sst` (K), DOI 10.5067/GHGMR-4FJ04 | Earthdata Login (free) |
 | Extraction self-test | Same MUR v4.1 product mirrored on AWS Open Data (`s3://mur-sst/zarr-v1`), 2002-06 … ~2020-01 | Anonymous |
 
-**EIC provenance:** the SVS API record for 5101 lists the keyword **“Earth Information Center”** and names MUR
-SST as its dataset. The pipeline stores this in `manifest.visualization.eicKeyword`. It is strong evidence but
-**not** an official confirmation; the data lead should confirm with the EIC content database before submission.
-Note that 5101 is not one of the SVS pages linked from the challenge text.
+**EIC provenance (confirmed 2026-11-14):** SVS 5101 is listed in the **Earth Information Center (EIC) Content
+Database**, the SVS gallery the challenge names as its data resource
+(https://svs.gsfc.nasa.gov/gallery/earth-information-center/, SVS API id 40467), under the sub-gallery
+*Daily Visualizations* (https://svs.gsfc.nasa.gov/gallery/daily-visualizations/, id 40512). Its SVS API record also
+carries the keyword “Earth Information Center”, which the pipeline stores in `manifest.visualization.eicKeyword`.
+To re-check: fetch `https://svs.gsfc.nasa.gov/api/40467`, follow its gallery items and look for id 5101.
 
 ## 2. Observation dates
 

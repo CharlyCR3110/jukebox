@@ -186,20 +186,60 @@ def extract_point(sst, mask, lat: float, lon: float) -> dict:
     }
 
 
-def earthdata_open(date: str):
+def earthdata_login() -> None:
     import earthaccess
-    import xarray as xr
 
-    if os.environ.get("EARTHDATA_USERNAME") and os.environ.get("EARTHDATA_PASSWORD"):
-        auth = earthaccess.login(strategy="environment")
-    else:
-        auth = earthaccess.login(strategy="netrc")
+    try:
+        if os.environ.get("EARTHDATA_USERNAME") and os.environ.get("EARTHDATA_PASSWORD"):
+            auth = earthaccess.login(strategy="environment")
+        else:
+            auth = earthaccess.login(strategy="netrc")
+    except Exception as e:  # earthaccess raises when no netrc exists
+        log(f"earthaccess login error: {type(e).__name__}")
+        auth = None
     if not auth or not getattr(auth, "authenticated", False):
         raise SystemExit(
             "Earthdata Login failed. Set EARTHDATA_USERNAME/EARTHDATA_PASSWORD or add\n"
             "  machine urs.earthdata.nasa.gov login <user> password <pass>\nto ~/.netrc (chmod 600). "
             "Free account: https://urs.earthdata.nasa.gov/users/new"
         )
+
+
+def check_units(sst) -> None:
+    """Spec §5.4: convert according to the variable metadata, never by assumption."""
+    units = str(sst.attrs.get("units", "")).lower()
+    if units not in ("kelvin", "k"):
+        raise SystemExit(f"analysed_sst units are {units!r}, expected kelvin; refusing to convert")
+
+
+# Physically possible open-ocean SST in °C (sea water freezes near −1.9 °C). Anything outside means a decoding bug.
+SST_PLAUSIBLE_C = (-2.5, 36.0)
+
+
+def sanity_check(frames: list[dict], locations: list[dict]) -> None:
+    """Refuse to write a manifest whose measured values are impossible; print a summary for a human check."""
+    problems = []
+    log("\nMeasured SST summary (°C):  location        min     max   valid  first-frame deltaC")
+    for loc in locations:
+        pts = [f["points"][loc["id"]] for f in frames]
+        vals = [p["sstC"] for p in pts if p["isValid"]]
+        for f, p in zip(frames, pts):
+            if p["isValid"] and not SST_PLAUSIBLE_C[0] <= p["sstC"] <= SST_PLAUSIBLE_C[1]:
+                problems.append(f"{loc['id']} {f['date']}: {p['sstC']} °C is outside {SST_PLAUSIBLE_C}")
+            if not p["isValid"] and (p["sstC"] is not None or p["deltaC"] is not None):
+                problems.append(f"{loc['id']} {f['date']}: invalid point carries a value")
+        if pts[0]["deltaC"] is not None:
+            problems.append(f"{loc['id']}: first frame must have deltaC = null")
+        lo, hi = (min(vals), max(vals)) if vals else (None, None)
+        log(f"  {loc['id']:<24} {lo!s:>7} {hi!s:>7}  {len(vals):>2}/{len(pts)}   {pts[0]['deltaC']}")
+    if problems:
+        raise SystemExit("Sanity check failed, manifest NOT written:\n  " + "\n  ".join(problems))
+
+
+def earthdata_open(date: str):
+    import earthaccess
+    import xarray as xr
+
     found = earthaccess.search_data(short_name=MUR_SHORT_NAME, temporal=(f"{date}T00:00:00Z", f"{date}T23:59:59Z"))
     stamp = date.replace("-", "")
     found = [g for g in found if any(stamp in u for u in g.data_links())]
@@ -223,6 +263,7 @@ def zarr_open(date: str):
 def selftest(date: str, locations: list[dict]) -> None:
     log(f"Self-test: extracting presets from the anonymous AWS MUR Zarr for {date} …")
     ds, src = zarr_open(date)
+    check_units(ds.analysed_sst)
     print(f"source: {src}\nunits: {ds.analysed_sst.attrs.get('units')}  lat order: {float(ds.lat[0])}→{float(ds.lat[-1])}")
     for loc in locations:
         p = extract_point(ds.analysed_sst, ds.mask, loc["lat"], loc["lon"])
@@ -257,6 +298,9 @@ def main() -> None:
     if missing:
         raise SystemExit(f"SVS 5101 has no frame for: {', '.join(missing)} (available {min(available)} … {max(available)})")
 
+    if a.mode == "measured":
+        earthdata_login()  # fail fast, before any frame is overwritten
+
     out, cache = Path(a.out), Path(a.cache)
     (out / "frames").mkdir(parents=True, exist_ok=True)
 
@@ -276,6 +320,7 @@ def main() -> None:
         if a.mode == "measured":
             ds, numeric_src = earthdata_open(date)
             sst, mask = ds.analysed_sst, ds.mask
+            check_units(sst)
         points = {}
         for loc in locations:
             base = {"lat": loc["lat"], "lon": loc["lon"]}
@@ -305,6 +350,11 @@ def main() -> None:
             frame["numericSourceUrl"] = numeric_src
         frames.append(frame)
         prev = frame
+        if a.mode == "measured":
+            ds.close()
+
+    if a.mode == "measured":
+        sanity_check(frames, locations)
 
     manifest = {
         "schemaVersion": 1,

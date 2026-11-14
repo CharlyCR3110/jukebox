@@ -13,7 +13,7 @@ All frames and the manifest are in `apps/web/public/data/sst/`, so the demo work
 are installed. Fonts fall back to system fonts without network access.
 
 Check before going on stage:
-- [ ] Mode banner. If it says VISUAL FEATURE MODE, decide whether to present that, or rebuild data with `--mode measured`.
+- [ ] Header shows `MUR SST v4.1 · NASA SVS 5101 · EIC` and no VISUAL FEATURE MODE banner (shipped data is measured).
 - [ ] Laptop volume about 50 %; app volume 40 % (default).
 - [ ] Press Play once: tones audible. Press Pause: silent.
 - [ ] Controller (optional): click **CONTROLLER · CONNECT**, pick the ESP32 port, turn the knob, and watch the timeline move.
@@ -23,7 +23,7 @@ Check before going on stage:
 | Time | Action | Say |
 |---|---|---|
 | 0–15 s | Point to the map, badge and date | “Most Earth science is shown through images. This is NASA’s Earth Information Center sea-surface temperature visualization, November 2025.” |
-| 15–35 s | Select **Western Pacific warm pool**, press **Play** | “Warmer water, higher tone. Read the value on screen: about 29 °C here, so 220 + 29/35 × 660 ≈ 767 Hz. The formula is shown in the panel.” |
+| 15–35 s | Select **Western Pacific warm pool**, press **Play** | “Warmer water, higher tone. Read the value on screen: 30.14 °C on the first frame, so 220 + 30.14/35 × 660 ≈ 788 Hz. The formula is shown in the panel.” |
 | 35–55 s | Switch to **North Atlantic** while playing | “Hear the pitch climb through spring and summer. Each upward glide means warmer than last month, and more pulses mean a bigger change.” |
 | 55–70 s | Close your eyes / hide the screen, switch to **Southern Ocean** | “Without looking: low and steady. Cold, and changing slowly.” |
 | 70–90 s | Turn the ESP32 knob, Tab to the location list, open “What am I hearing?” | “Same controls by knob, keyboard, or mouse, plus a text equivalent for every sound. Every number links back to its NASA source file.” |

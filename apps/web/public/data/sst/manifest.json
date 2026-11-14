@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "title": "Ocean Surface Temperature",
   "datasetId": "MUR-JPL-L4-GLOB-v4.1",
-  "dataMode": "visual_feature",
-  "units": "red_blue_index",
-  "samplingMethod": "Mean of (R − B) / 255 over colored (non-grey) pixels of the sRGB SVS frame within ±0.5° of the location. This describes the visualization's colors only: it is not a temperature.",
-  "generatedAt": "2026-11-14T16:35:37+00:00",
+  "dataMode": "measured_sst",
+  "units": "degC",
+  "samplingMethod": "Mean of MUR v4.1 analysed_sst over valid open-sea cells (mask == 1) within ±0.05° latitude/longitude of the location (≤ 11 × 11 cells of the 0.01° grid). Valid when ≥ 50 % of the box has data. Land, lake, ice-flagged and fill cells are excluded, never zero-filled. Kelvin → °C by subtracting 273.15 after applying the variable's scale_factor/add_offset.",
+  "generatedAt": "2026-11-14T20:40:03+00:00",
   "generator": "scripts/prepare_data.py",
   "visualization": {
     "svsId": 5101,
@@ -16,7 +16,14 @@
     "projection": "Source frames are equirectangular 4096×2048; reprojected row-exactly to Web Mercator (±85.0511°) for display.",
     "credit": "NASA's Scientific Visualization Studio"
   },
-  "numericSource": null,
+  "numericSource": {
+    "name": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis v4.1",
+    "shortName": "MUR-JPL-L4-GLOB-v4.1",
+    "url": "https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1",
+    "doi": "https://doi.org/10.5067/GHGMR-4FJ04",
+    "credit": "NASA JPL / PO.DAAC",
+    "variable": "analysed_sst (kelvin)"
+  },
   "colorScale": {
     "minC": -5,
     "maxC": 35,
@@ -89,59 +96,55 @@
         "wpwp": {
           "lat": 5.0,
           "lon": 150.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3417,
+          "sstC": 30.144,
+          "spatialStdC": 0.053,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": null
+          "nCells": 121,
+          "deltaC": null
         },
         "nino34": {
           "lat": 0.0,
           "lon": -145.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4387,
+          "sstC": 25.021,
+          "spatialStdC": 0.041,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": null
+          "nCells": 121,
+          "deltaC": null
         },
         "gulf": {
           "lat": 25.0,
           "lon": -90.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4277,
+          "sstC": 27.802,
+          "spatialStdC": 0.049,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": null
+          "nCells": 121,
+          "deltaC": null
         },
         "natl": {
           "lat": 45.0,
           "lon": -35.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.0306,
+          "sstC": 15.568,
+          "spatialStdC": 0.102,
           "isValid": true,
-          "coverage": 0.854,
-          "featureDelta": null
+          "coverage": 1.0,
+          "nCells": 121,
+          "deltaC": null
         },
         "so": {
           "lat": -55.0,
           "lon": 0.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.4692,
+          "sstC": -0.726,
+          "spatialStdC": 0.027,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": null
+          "nCells": 121,
+          "deltaC": null
         }
-      }
+      },
+      "numericSourceUrl": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20251115090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
     },
     {
       "frameId": "sst-20251215",
@@ -154,59 +157,55 @@
         "wpwp": {
           "lat": 5.0,
           "lon": 150.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3508,
+          "sstC": 29.57,
+          "spatialStdC": 0.04,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0091
+          "nCells": 121,
+          "deltaC": -0.574
         },
         "nino34": {
           "lat": 0.0,
           "lon": -145.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4369,
+          "sstC": 25.368,
+          "spatialStdC": 0.049,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0018
+          "nCells": 121,
+          "deltaC": 0.347
         },
         "gulf": {
           "lat": 25.0,
           "lon": -90.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4432,
+          "sstC": 26.798,
+          "spatialStdC": 0.038,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0155
+          "nCells": 121,
+          "deltaC": -1.004
         },
         "natl": {
           "lat": 45.0,
           "lon": -35.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.2398,
+          "sstC": 13.202,
+          "spatialStdC": 0.036,
           "isValid": true,
-          "coverage": 0.938,
-          "featureDelta": -0.2092
+          "coverage": 1.0,
+          "nCells": 121,
+          "deltaC": -2.366
         },
         "so": {
           "lat": -55.0,
           "lon": 0.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.5082,
+          "sstC": -0.129,
+          "spatialStdC": 0.01,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.039
+          "nCells": 121,
+          "deltaC": 0.597
         }
-      }
+      },
+      "numericSourceUrl": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20251215090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
     },
     {
       "frameId": "sst-20260115",
@@ -219,59 +218,55 @@
         "wpwp": {
           "lat": 5.0,
           "lon": 150.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3811,
+          "sstC": 29.175,
+          "spatialStdC": 0.095,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0303
+          "nCells": 121,
+          "deltaC": -0.395
         },
         "nino34": {
           "lat": 0.0,
           "lon": -145.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4377,
+          "sstC": 25.067,
+          "spatialStdC": 0.02,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0008
+          "nCells": 121,
+          "deltaC": -0.301
         },
         "gulf": {
           "lat": 25.0,
           "lon": -90.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4378,
+          "sstC": 25.278,
+          "spatialStdC": 0.044,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0054
+          "nCells": 121,
+          "deltaC": -1.52
         },
         "natl": {
           "lat": 45.0,
           "lon": -35.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.2833,
+          "sstC": 12.753,
+          "spatialStdC": 0.045,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0435
+          "nCells": 121,
+          "deltaC": -0.449
         },
         "so": {
           "lat": -55.0,
           "lon": 0.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.6141,
+          "sstC": 0.818,
+          "spatialStdC": 0.055,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.1059
+          "nCells": 121,
+          "deltaC": 0.947
         }
-      }
+      },
+      "numericSourceUrl": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20260115090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
     },
     {
       "frameId": "sst-20260215",
@@ -284,59 +279,55 @@
         "wpwp": {
           "lat": 5.0,
           "lon": 150.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3533,
+          "sstC": 30.024,
+          "spatialStdC": 0.043,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0278
+          "nCells": 121,
+          "deltaC": 0.849
         },
         "nino34": {
           "lat": 0.0,
           "lon": -145.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4353,
+          "sstC": 25.327,
+          "spatialStdC": 0.029,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0024
+          "nCells": 121,
+          "deltaC": 0.26
         },
         "gulf": {
           "lat": 25.0,
           "lon": -90.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4388,
+          "sstC": 24.064,
+          "spatialStdC": 0.13,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.001
+          "nCells": 121,
+          "deltaC": -1.214
         },
         "natl": {
           "lat": 45.0,
           "lon": -35.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.3384,
+          "sstC": 12.386,
+          "spatialStdC": 0.083,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0551
+          "nCells": 121,
+          "deltaC": -0.367
         },
         "so": {
           "lat": -55.0,
           "lon": 0.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.6394,
+          "sstC": 1.632,
+          "spatialStdC": 0.032,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0253
+          "nCells": 121,
+          "deltaC": 0.814
         }
-      }
+      },
+      "numericSourceUrl": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20260215090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
     },
     {
       "frameId": "sst-20260315",
@@ -349,59 +340,55 @@
         "wpwp": {
           "lat": 5.0,
           "lon": 150.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3683,
+          "sstC": 28.998,
+          "spatialStdC": 0.027,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.015
+          "nCells": 121,
+          "deltaC": -1.026
         },
         "nino34": {
           "lat": 0.0,
           "lon": -145.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4371,
+          "sstC": 25.813,
+          "spatialStdC": 0.058,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0018
+          "nCells": 121,
+          "deltaC": 0.486
         },
         "gulf": {
           "lat": 25.0,
           "lon": -90.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4387,
+          "sstC": 24.497,
+          "spatialStdC": 0.049,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0001
+          "nCells": 121,
+          "deltaC": 0.433
         },
         "natl": {
           "lat": 45.0,
           "lon": -35.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.1795,
+          "sstC": 13.621,
+          "spatialStdC": 0.191,
           "isValid": true,
-          "coverage": 0.882,
-          "featureDelta": 0.1589
+          "coverage": 1.0,
+          "nCells": 121,
+          "deltaC": 1.235
         },
         "so": {
           "lat": -55.0,
           "lon": 0.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.5796,
+          "sstC": 0.733,
+          "spatialStdC": 0.031,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0598
+          "nCells": 121,
+          "deltaC": -0.899
         }
-      }
+      },
+      "numericSourceUrl": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20260315090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
     },
     {
       "frameId": "sst-20260415",
@@ -414,59 +401,55 @@
         "wpwp": {
           "lat": 5.0,
           "lon": 150.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.374,
+          "sstC": 29.479,
+          "spatialStdC": 0.058,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0057
+          "nCells": 121,
+          "deltaC": 0.481
         },
         "nino34": {
           "lat": 0.0,
           "lon": -145.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4318,
+          "sstC": 27.751,
+          "spatialStdC": 0.087,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0053
+          "nCells": 121,
+          "deltaC": 1.938
         },
         "gulf": {
           "lat": 25.0,
           "lon": -90.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.439,
+          "sstC": 24.664,
+          "spatialStdC": 0.051,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0003
+          "nCells": 121,
+          "deltaC": 0.167
         },
         "natl": {
           "lat": 45.0,
           "lon": -35.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.3072,
+          "sstC": 13.081,
+          "spatialStdC": 0.042,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.1277
+          "nCells": 121,
+          "deltaC": -0.54
         },
         "so": {
           "lat": -55.0,
           "lon": 0.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.549,
+          "sstC": 0.238,
+          "spatialStdC": 0.05,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0306
+          "nCells": 121,
+          "deltaC": -0.495
         }
-      }
+      },
+      "numericSourceUrl": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20260415090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
     },
     {
       "frameId": "sst-20260515",
@@ -479,59 +462,55 @@
         "wpwp": {
           "lat": 5.0,
           "lon": 150.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3686,
+          "sstC": 29.458,
+          "spatialStdC": 0.046,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0054
+          "nCells": 121,
+          "deltaC": -0.021
         },
         "nino34": {
           "lat": 0.0,
           "lon": -145.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4087,
+          "sstC": 28.723,
+          "spatialStdC": 0.093,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0231
+          "nCells": 121,
+          "deltaC": 0.972
         },
         "gulf": {
           "lat": 25.0,
           "lon": -90.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4425,
+          "sstC": 26.46,
+          "spatialStdC": 0.06,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0035
+          "nCells": 121,
+          "deltaC": 1.796
         },
         "natl": {
           "lat": 45.0,
           "lon": -35.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.0588,
+          "sstC": 14.471,
+          "spatialStdC": 0.054,
           "isValid": true,
-          "coverage": 0.799,
-          "featureDelta": 0.2484
+          "coverage": 1.0,
+          "nCells": 121,
+          "deltaC": 1.39
         },
         "so": {
           "lat": -55.0,
           "lon": 0.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.5268,
+          "sstC": 0.295,
+          "spatialStdC": 0.016,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0222
+          "nCells": 121,
+          "deltaC": 0.057
         }
-      }
+      },
+      "numericSourceUrl": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20260515090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
     },
     {
       "frameId": "sst-20260615",
@@ -544,59 +523,55 @@
         "wpwp": {
           "lat": 5.0,
           "lon": 150.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3415,
+          "sstC": 29.932,
+          "spatialStdC": 0.033,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0271
+          "nCells": 121,
+          "deltaC": 0.474
         },
         "nino34": {
           "lat": 0.0,
           "lon": -145.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3761,
+          "sstC": 29.523,
+          "spatialStdC": 0.028,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0326
+          "nCells": 121,
+          "deltaC": 0.8
         },
         "gulf": {
           "lat": 25.0,
           "lon": -90.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3859,
+          "sstC": 28.888,
+          "spatialStdC": 0.015,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0566
+          "nCells": 121,
+          "deltaC": 2.428
         },
         "natl": {
           "lat": 45.0,
           "lon": -35.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.2046,
+          "sstC": 15.917,
+          "spatialStdC": 0.051,
           "isValid": true,
-          "coverage": 0.938,
-          "featureDelta": 0.2634
+          "coverage": 1.0,
+          "nCells": 121,
+          "deltaC": 1.446
         },
         "so": {
           "lat": -55.0,
           "lon": 0.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.5113,
+          "sstC": 0.318,
+          "spatialStdC": 0.06,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0155
+          "nCells": 121,
+          "deltaC": 0.023
         }
-      }
+      },
+      "numericSourceUrl": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20260615090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
     },
     {
       "frameId": "sst-20260715",
@@ -609,59 +584,55 @@
         "wpwp": {
           "lat": 5.0,
           "lon": 150.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3432,
+          "sstC": 30.038,
+          "spatialStdC": 0.011,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0017
+          "nCells": 121,
+          "deltaC": 0.106
         },
         "nino34": {
           "lat": 0.0,
           "lon": -145.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3666,
+          "sstC": 29.487,
+          "spatialStdC": 0.01,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0095
+          "nCells": 121,
+          "deltaC": -0.036
         },
         "gulf": {
           "lat": 25.0,
           "lon": -90.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3309,
+          "sstC": 29.97,
+          "spatialStdC": 0.079,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.055
+          "nCells": 121,
+          "deltaC": 1.082
         },
         "natl": {
           "lat": 45.0,
           "lon": -35.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3662,
+          "sstC": 17.595,
+          "spatialStdC": 0.031,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.1616
+          "nCells": 121,
+          "deltaC": 1.678
         },
         "so": {
           "lat": -55.0,
           "lon": 0.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.5407,
+          "sstC": 0.282,
+          "spatialStdC": 0.016,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0294
+          "nCells": 121,
+          "deltaC": -0.036
         }
-      }
+      },
+      "numericSourceUrl": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20260715090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
     },
     {
       "frameId": "sst-20260815",
@@ -674,59 +645,55 @@
         "wpwp": {
           "lat": 5.0,
           "lon": 150.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3568,
+          "sstC": 29.728,
+          "spatialStdC": 0.025,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0136
+          "nCells": 121,
+          "deltaC": -0.31
         },
         "nino34": {
           "lat": 0.0,
           "lon": -145.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3376,
+          "sstC": 30.322,
+          "spatialStdC": 0.082,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.029
+          "nCells": 121,
+          "deltaC": 0.835
         },
         "gulf": {
           "lat": 25.0,
           "lon": -90.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3592,
+          "sstC": 29.711,
+          "spatialStdC": 0.148,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0283
+          "nCells": 121,
+          "deltaC": -0.259
         },
         "natl": {
           "lat": 45.0,
           "lon": -35.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4269,
+          "sstC": 20.667,
+          "spatialStdC": 0.217,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0607
+          "nCells": 121,
+          "deltaC": 3.072
         },
         "so": {
           "lat": -55.0,
           "lon": 0.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.4578,
+          "sstC": -0.781,
+          "spatialStdC": 0.016,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0829
+          "nCells": 121,
+          "deltaC": -1.063
         }
-      }
+      },
+      "numericSourceUrl": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20260815090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
     },
     {
       "frameId": "sst-20260915",
@@ -739,59 +706,55 @@
         "wpwp": {
           "lat": 5.0,
           "lon": 150.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3639,
+          "sstC": 29.566,
+          "spatialStdC": 0.051,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0071
+          "nCells": 121,
+          "deltaC": -0.162
         },
         "nino34": {
           "lat": 0.0,
           "lon": -145.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3189,
+          "sstC": 30.512,
+          "spatialStdC": 0.078,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0187
+          "nCells": 121,
+          "deltaC": 0.19
         },
         "gulf": {
           "lat": 25.0,
           "lon": -90.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.2733,
+          "sstC": 31.706,
+          "spatialStdC": 0.112,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0859
+          "nCells": 121,
+          "deltaC": 1.995
         },
         "natl": {
           "lat": 45.0,
           "lon": -35.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4076,
+          "sstC": 18.961,
+          "spatialStdC": 0.172,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0193
+          "nCells": 121,
+          "deltaC": -1.706
         },
         "so": {
           "lat": -55.0,
           "lon": 0.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.4157,
+          "sstC": -1.323,
+          "spatialStdC": 0.018,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0421
+          "nCells": 121,
+          "deltaC": -0.542
         }
-      }
+      },
+      "numericSourceUrl": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20260915090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
     },
     {
       "frameId": "sst-20261015",
@@ -804,59 +767,55 @@
         "wpwp": {
           "lat": 5.0,
           "lon": 150.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.342,
+          "sstC": 29.687,
+          "spatialStdC": 0.066,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0219
+          "nCells": 121,
+          "deltaC": 0.121
         },
         "nino34": {
           "lat": 0.0,
           "lon": -145.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3271,
+          "sstC": 30.695,
+          "spatialStdC": 0.017,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.0082
+          "nCells": 121,
+          "deltaC": 0.183
         },
         "gulf": {
           "lat": 25.0,
           "lon": -90.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.4035,
+          "sstC": 28.147,
+          "spatialStdC": 0.106,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.1302
+          "nCells": 121,
+          "deltaC": -3.559
         },
         "natl": {
           "lat": 45.0,
           "lon": -35.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": 0.3669,
+          "sstC": 17.983,
+          "spatialStdC": 0.232,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": -0.0407
+          "nCells": 121,
+          "deltaC": -0.978
         },
         "so": {
           "lat": -55.0,
           "lon": 0.0,
-          "sstC": null,
-          "deltaC": null,
-          "spatialStdC": null,
-          "feature": -0.3937,
+          "sstC": -1.779,
+          "spatialStdC": 0.004,
           "isValid": true,
           "coverage": 1.0,
-          "featureDelta": 0.022
+          "nCells": 121,
+          "deltaC": -0.456
         }
-      }
+      },
+      "numericSourceUrl": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20261015090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
     }
   ]
 }

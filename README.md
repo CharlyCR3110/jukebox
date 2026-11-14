@@ -23,8 +23,8 @@ npm run build     # type-check + tests + bundle → apps/web/dist (static, no ba
 | `measured_sst` | Measured MUR v4.1 SST (°C) at each location and date | `python scripts/prepare_data.py --mode measured` (needs a free [Earthdata Login](https://urs.earthdata.nasa.gov/users/new) via `EARTHDATA_USERNAME`/`EARTHDATA_PASSWORD` or `~/.netrc`) |
 | `visual_feature` | Red–blue index of the NASA frame pixels. Labeled everywhere as **not a temperature** | `python scripts/prepare_data.py --mode visual` (no credentials) |
 
-**Currently shipped: `visual_feature`.** Earthdata credentials were not available when the data was built. Run the
-measured command once to switch; the app reads the mode from the manifest. Python setup:
+**Currently shipped: `measured_sst`** (built 2026-11-14 from 12 MUR v4.1 granules, one per frame date). The app
+reads the mode from the manifest; the script refuses to write values outside −2.5…36 °C. Python setup:
 
 ```bash
 uv venv scripts/.venv && source scripts/.venv/bin/activate
@@ -32,8 +32,8 @@ uv pip install -r scripts/requirements.txt
 python scripts/prepare_data.py --selftest 2019-11-15   # checks extraction on the anonymous AWS MUR copy
 ```
 
-Frames come from NASA SVS 5101, which is tagged “Earth Information Center” in the SVS API. Still confirm it with
-EIC before submission. The default dates are 12 monthly observations, 2025-11-15 … 2026-10-15. Details, formulas
+Frames come from NASA SVS 5101, which is listed in NASA's EIC Content Database (*Earth Information Center >
+Daily Visualizations*). The default dates are 12 monthly observations, 2025-11-15 … 2026-10-15. Details, formulas
 and limitations are in [docs/methodology.md](docs/methodology.md).
 
 ## Architecture
@@ -66,7 +66,6 @@ Chrome or Edge on localhost or HTTPS. Every action is also available without the
 
 ## Not done yet (spec P1 / open items)
 
-- Measured data build (needs Earthdata credentials) and official EIC confirmation.
 - Listening Challenge (A/B comparison) and spatial-variability timbre.
 - Firmware has not been compiled or run on an ESP32. The browser adapter is unit-tested against the protocol only.
 - No user testing of the sound mapping or accessibility yet.

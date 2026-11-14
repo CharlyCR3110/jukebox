@@ -261,10 +261,10 @@ Pins are defined at the top. **Not yet compiled or tested on hardware.**
 
 ## 8. Known gaps and next steps (by priority)
 
-1. **Measured data.** Get an Earthdata Login and run `--mode measured`. The Earthdata branch of the script hasn't been run yet;
-   its extraction function is the same one the self-test validated. Check the output values look plausible
-   before the demo.
-2. **EIC confirmation.** SVS 5101 has the "Earth Information Center" keyword, but confirm with the EIC content database.
+1. ~~**Measured data.**~~ Done 2026-11-14: the shipped manifest is `measured_sst`. Ranges (°C): warm pool 29.0–30.1,
+   Niño 3.4 25.0–30.7, Gulf 24.1–31.7, N. Atlantic 12.4–20.7, Southern Ocean −1.8–1.6 (below 0 °C the pitch is clamped
+   to 220 Hz and the UI says so). Rebuilding needs an Earthdata Login in `~/.netrc`.
+2. ~~**EIC confirmation.**~~ Done 2026-11-14: SVS 5101 is in the EIC Content Database, *Daily Visualizations* (see methodology.md).
 3. **Firmware.** Compile, flash, test on hardware, and adjust pins.
 4. **Listening Challenge** (spec P1): A/B comparison mode.
 5. **Automated browser tests** (see §7).
